@@ -5,7 +5,8 @@ class fluentd (
     $install_repo = $fluentd::params::install_repo,
     $package_ensure = $fluentd::params::package_ensure,
     $service_enable = $fluentd::params::service_enable,
-    $service_ensure = $fluentd::params::service_ensure
+    $service_ensure = $fluentd::params::service_ensure,
+    $service_name = $fluentd::params::service_name
 ) inherits fluentd::params {
     class{'fluentd::packages': }
     class{'fluentd::config': }
