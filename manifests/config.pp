@@ -2,7 +2,13 @@
 #
 #
 class fluentd::config() {
-    file { '/etc/td-agent/td-agent.conf' :
+    if $fluentd::product_name == 'fluentd' {
+        $config_file = 'fluent'
+    } else {
+        $config_file = $fluentd::product_name
+    }
+
+    file { "/etc/${fluentd::product_name}/${config_file}.conf" :
         ensure  => file,
         owner   => 'root',
         group   => 'root',
@@ -10,10 +16,10 @@ class fluentd::config() {
         notify  => Class['fluentd::service'],
     }
 
-    file {'/etc/td-agent/config.d':
+    file {"/etc/${fluentd::product_name}/config.d":
         ensure  => 'directory',
-        owner   => 'td-agent',
-        group   => 'td-agent',
+        owner   => "${fluentd::product_name}",
+        group   => "${fluentd::product_name}",
         mode    => '0750',
     }
 }

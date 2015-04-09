@@ -8,6 +8,9 @@ class fluentd (
     $service_ensure = $fluentd::params::service_ensure,
     $service_name = $fluentd::params::service_name
 ) inherits fluentd::params {
+    # fluentd vs td-agent
+    $product_name = $service_name
+
     class{'fluentd::packages': }
     class{'fluentd::config': }
     class{'fluentd::service': }

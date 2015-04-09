@@ -35,10 +35,10 @@ class fluentd::packages (
                 before => Package[$package_name],
                 ensure => $package_ensure
             }
-            exec {'add user td-agent to group adm':
+            exec {"add user ${fluentd::product_name} to group adm":
                 provider => shell,
-                unless => '/bin/grep -q "adm\S*td-agent" /etc/group',
-                command => '/usr/sbin/usermod -aG adm td-agent',
+                unless => "/bin/grep -q \"adm\\S*${fluentd::product_name}\" /etc/group",
+                command => "/usr/sbin/usermod -aG adm ${fluentd::product_name}",
                 subscribe => Package[$package_name],
             }
         }

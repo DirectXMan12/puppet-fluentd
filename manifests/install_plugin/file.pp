@@ -1,6 +1,6 @@
 # == fluentd::install_plugin::file
 #
-# install a plugin with by copying a file to /etc/td-agent/plugins
+# install a plugin with by copying a file to /etc/${fluentd::product_name}/plugins
 #
 # Parameters:
 #  the name of this ressource reflects the filename of the plugin, which must
@@ -13,10 +13,10 @@ define fluentd::install_plugin::file (
     $plugin_name = $name,
 ) {
     file {
-        "/etc/td-agent/plugin/${plugin_name}":
+        "/etc/${fluentd::product_name}/plugin/${plugin_name}":
             ensure => $ensure,
-            owner  => td-agent,
-            group  => td-agent,
+            owner  => ${fluentd::product_name},
+            group  => ${fluentd::product_name},
             mode   => '0640',
             source => "puppet:///fluentd/plugins/${plugin_name}",
             notify => Service["${::fluentd::service_name}"];
